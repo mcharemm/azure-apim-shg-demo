@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: paas-gc-api-4
+  name: paas-gc-api-4
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: paas-gc-api-4
+  template:
+    metadata:
+      labels:
+        app: paas-gc-api-4
+    spec:
+      containers:
+        - image: gcr.io/paas-gc/paas-gc-api:v1
+          name: paas-gc-api-4
+          imagePullPolicy: Always
+          env:
+            - name: API_ID
+              value: "4"
+            - name: API_CLOUD
+              value: "google"
+            - name: API_TITLE
+              value: "GC PaaS Demo API 4"
+          command: ["python"]
+          args: ["api/paas_gc_api_demo.py"]
+          ports:
+            - containerPort: 5000
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: paas-gc-api-4
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 5004
+      targetPort: 5000
+  selector:
+    app: paas-gc-api-4

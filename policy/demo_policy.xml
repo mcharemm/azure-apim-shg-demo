@@ -1,0 +1,8 @@
+<policies>
+    <inbound>
+        <base />
+        <set-header name="Demo" exists-action="override">
+            <value>"Este es un ejemplo"</value>
+        </set-header>
+    </inbound>
+</policies>

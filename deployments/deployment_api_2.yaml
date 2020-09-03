@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: paas-gc-api-2
+  name: paas-gc-api-2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: paas-gc-api-2
+  template:
+    metadata:
+      labels:
+        app: paas-gc-api-2
+    spec:
+      containers:
+        - image: paasgcregistry.azurecr.io/paas-gc-api:v1
+          name: paas-gc-api-2
+          imagePullPolicy: Always
+          env:
+            - name: API_ID
+              value: "2"
+            - name: API_CLOUD
+              value: "azure"
+            - name: API_TITLE
+              value: "GC PaaS Demo API 2"
+          command: ["python"]
+          args: ["api/paas_gc_api_demo.py"]
+          ports:
+            - containerPort: 5000
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: paas-gc-api-2
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 5002
+      targetPort: 5000
+  selector:
+    app: paas-gc-api-2

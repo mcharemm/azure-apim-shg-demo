@@ -1,0 +1,18 @@
+openapi: 3.0.1
+info:
+  title: GC PaaS Demo API 1
+  version: "1.0"
+servers:
+- url: //<url o ip del servicio>
+paths:
+  /1/azure/hello:
+    get:
+      tags:
+      - azure
+      summary: Azure Hello API 1
+      operationId: demo
+      responses:
+        200:
+          description: ""
+          content: {}
+components: {}
